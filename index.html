@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Tortella – Кондитерская в Краснодаре</title>
+  <!-- Swiper CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  .swiper-slide-active {
+  transform: scale(1.2) !important;
+  z-index: 10;
+}
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fffcf9;
+      color: #2d2d2d;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1232px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    :root {
+      --purple: #926EAE;
+      --peach: #f3cac8;
+      --purple-dark: #6b4b84;
+      --peach-dark: #e2a9a6;
+      --light-bg: #fef8f5;
+      --shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+      --header-height: 76px;
+    }
+    /* ШАПКА */
+    .header {
+      width: 100%;
+      margin: 0 auto;
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .header__container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      max-width: 1232px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .logo img { height: 60px; width: auto; }
+    .nav--desktop { position: absolute; left: 50%; transform: translateX(-45%); }
+    .nav__list { display: flex; gap: 32px; list-style: none; }
+    .nav__link {
+      font-size: 15px; font-weight: 400; text-decoration: none; color: #2d2d2d;
+      transition: 0.2s; white-space: nowrap;
+    }
+    .nav__link:hover { color: var(--purple); }
+    .header__actions { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .icon-btn {
+      background: none; border: none; font-size: 22px; cursor: pointer;
+      color: #2d2d2d; transition: 0.2s; width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center; border-radius: 50%;
+      position: relative;
+    }
+    .icon-btn:hover { background: rgba(0,0,0,0.05); color: var(--purple); }
+    .cart-count {
+      position: absolute; top: -4px; right: -4px; background: var(--peach);
+      color: var(--purple-dark); font-size: 11px; font-weight: bold;
+      border-radius: 50%; padding: 2px 6px; min-width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .burger {
+      display: none; flex-direction: column; gap: 4px; background: none;
+      border: none; cursor: pointer; padding: 6px;
+    }
+    .burger span { width: 22px; height: 2px; background: #2d2d2d; border-radius: 2px; }
+    /* Бургер меню (справа, с overlay) */
+    .mobile-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); z-index: 2000; visibility: hidden; opacity: 0;
+      transition: visibility 0.3s, opacity 0.3s;
+    }
+    .mobile-menu {
+      position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
+      background: white; z-index: 2001; transition: right 0.3s;
+      padding: 80px 20px 20px; box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    }
+    .mobile-overlay.open { visibility: visible; opacity: 1; }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu__close {
+      position: absolute; top: 20px; right: 20px; font-size: 28px;
+      background: none; border: none; cursor: pointer;
+    }
+    .mobile-menu__list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .mobile-menu__list a { font-size: 18px; text-decoration: none; color: #2d2d2d; font-weight: 500; }
+    /* ГЕРОЙ (арка - верхняя половина овала) */
+    .hero {
+      padding: 5rem 0; background: linear-gradient(135deg, #fff5f2 0%, #ffffff 100%);
+      margin-top: var(--header-height);
+    }
+    .hero__container { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
+    .hero__frame {
+      position: relative;
+      width: 320px;
+      height: 360px;
+      background: var(--peach);
+      border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+    }
+    .hero__frame img {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      border-radius: 70% 70% 0 0 / 50% 50% 0 0;
+    }
+    /* Полукруглый текст с помощью SVG */
+    .hero__semicircle-svg {
+      position: absolute;
+      top: -45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 340px;
+      height: 90px;
+      pointer-events: none;
+      z-index: 5;
+      overflow: visible;
+    }
+    .hero__semicircle-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 22px;
+      fill: var(--purple-dark);
+      letter-spacing: 1px;
+      word-spacing: 3px; 
+    }
+    .hero__title { font-size: 0; margin: 0; }
+    .hero__location {
+      display: inline-flex; align-items: center; gap: 6px; background: var(--peach);
+      padding: 6px 14px; border-radius: 40px; margin: 1rem 0;
+    }
+    .hero__desc { max-width: 600px; margin-bottom: 2rem; font-size: 1.1rem; }
+    .btn {
+      display: inline-block; background-color: var(--purple); color: white;
+      border: none; padding: 12px 28px; border-radius: 50px; font-weight: 600;
+      cursor: pointer; transition: 0.3s; font-size: 1rem;
+    }
+    .btn:hover { background-color: var(--purple-dark); transform: translateY(-2px); }
+    /* Секции */
+    .section-title {
+      font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--purple);
+      text-align: center; font-family: 'Playfair Display', serif;
+    }
+    .section-subtitle { text-align: center; color: #6b6b6b; margin-bottom: 2rem; }
+    /* Swiper карусель для лучших работ */
+    .best-works { padding: 4rem 0; background: var(--light-bg); }
+    .swiper {
+      width: 100%;
+      padding: 20px 0 50px;
+      overflow: visible;
+      touch-action: pan-y pinch-zoom;
+    }
+    .swiper-slide {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+      width: 280px;
+      height: auto;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    .swiper-slide-active {
+      opacity: 1;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .best-info { padding: 1rem; }
+    .best-title { font-weight: 700; font-size: 1.2rem; }
+    .best-price { color: var(--purple); font-weight: 600; margin: 0.5rem 0; }
+    .best-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-want {
+      background: var(--peach); color: #5e3a6e; border: none; padding: 6px 12px;
+      border-radius: 40px; font-weight: 500; cursor: pointer;
+    }
+    .btn-details {
+      background: none; border: 1px solid var(--purple); padding: 6px 12px;
+      border-radius: 40px; cursor: pointer;
+    }
+    /* Начинки (фото) */
+    .fillings { padding: 3rem 0; }
+    .fillings__grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
+    }
+    .filling-card {
+      text-align: center;
+      background: #fff5f2;
+      padding: 2rem 1rem;
+      border-radius: 40px;
+      transition: transform 0.2s;
+    }
+    .filling-card img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    /* Каталог — 4 колонки на десктопе */
+    .catalog { padding: 4rem 0; }
+    .catalog__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .product-card {
+      background: white; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow);
+    }
+    .product-card img { width: 100%; height: 220px; object-fit: cover; }
+    .product-card__body { padding: 1rem; }
+    .product-card__title { font-weight: 700; font-size: 1.2rem; }
+    .product-card__price { color: var(--purple); font-weight: 600; margin: 8px 0; }
+    .product-card__actions { display: flex; justify-content: space-between; margin-top: 12px; }
+    /* Доставка */
+    .delivery { padding: 4rem 0; background: #fff5f2; }
+    .delivery__grid { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; }
+    .delivery__methods { flex: 1; min-width: 250px; }
+    .delivery__method { margin-bottom: 1.5rem; }
+    .delivery__method h3 { color: var(--purple); margin-bottom: 0.5rem; }
+    .delivery__map { flex: 1; min-width: 300px; }
+    .delivery__map iframe { width: 100%; height: 300px; border: 0; border-radius: 24px; }
+    /* FAQ */
+    .faq-section { padding: 4rem 0; }
+    .faq-item { border-bottom: 1px solid #eee; margin-bottom: 1rem; }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 0; cursor: pointer;
+    }
+    .faq-question span { font-size: 1.2rem; font-weight: 500; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: 0.3s; }
+    .faq-answer p { padding-bottom: 1rem; color: #555; }
+    .faq-item.active .faq-answer { max-height: 200px; }
+    .faq-button-wrapper { text-align: center; margin-top: 2rem; }
+    /* Подвал */
+    .footer {
+      background: #2d2d2d; color: #ccc; padding: 3rem 0 1rem; margin-top: 3rem;
+    }
+    .footer__container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .footer__brand {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .socials {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      justify-content: flex-start;
+    }
+    .social-link { font-size: 1.5rem; color: #ccc; }
+    .footer__col h4 { color: var(--peach); margin-bottom: 1rem; }
+    .footer__col ul { list-style: none; }
+    .footer__col ul li { margin-bottom: 0.5rem; }
+    .footer__col a { color: #ccc; text-decoration: none; }
+    .footer__col a:hover { color: var(--peach); }
+    .footer__bottom { text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #444; }
+    /* Модальные окна */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); align-items: center; justify-content: center;
+      z-index: 3000;
+    }
+    .modal__content {
+      background: white; max-width: 500px; width: 90%; border-radius: 32px;
+      padding: 2rem; position: relative; max-height: 80vh; overflow-y: auto;
+    }
+    .modal__close {
+      position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem;
+      background: none; border: none; cursor: pointer;
+    }
+    /* Уменьшенное фото в модалке */
+    .modal__product-img {
+      max-width: 80%;
+      height: auto;
+      border-radius: 24px;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+    /* Кастомное уведомление (модальное окно) */
+    .notification-modal {
+      background: white;
+      border-radius: 32px;
+      padding: 1.5rem;
+      text-align: center;
+      max-width: 300px;
+      width: 80%;
+    }
+    .notification-modal p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    .notification-modal button {
+      background: var(--purple);
+      color: white;
+      border: none;
+      padding: 8px 24px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    /* Корзина drawer с оверлеем */
+    .cart-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4); z-index: 3050; display: none;
+    }
+    .cart-overlay.active { display: block; }
+    .cart-drawer {
+      position: fixed; top: 0; right: -400px; width: 380px; max-width: 90vw;
+      height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      z-index: 3100; transition: right 0.3s; display: flex; flex-direction: column;
+    }
+    .cart-drawer.open { right: 0; }
+    .cart-drawer__header { padding: 1rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .cart-drawer__close {
+      background: none; border: none; font-size: 26px; cursor: pointer; line-height: 1;
+      padding: 0 6px;
+    }
+    .cart-drawer__items { flex: 1; padding: 1rem; overflow-y: auto; }
+    .cart-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 1rem;
+      align-items: center;
+    }
+    .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; }
+    .cart-item-details { flex: 1; }
+    .cart-item-remove {
+      background: none;
+      border: none;
+      color: #333;
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-left: 8px;
+    }
+    .cart-drawer__footer { padding: 1rem; border-top: 1px solid #eee; }
+    .cart-total { font-weight: bold; margin-bottom: 1rem; }
+    input, textarea, select {
+      width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #ddd;
+      border-radius: 40px; font-family: inherit;
+    }
+    textarea { border-radius: 24px; }
+    /* Количество в модалке */
+    .quantity-selector {
+      display: flex; align-items: center; gap: 12px; margin: 1rem 0;
+    }
+    .quantity-selector label { font-weight: 500; }
+    .quantity-selector input {
+      width: 100px; margin: 0; text-align: center;
+    }
+    /* Улучшение отступов в модалке товара */
+    .modal-add-btn { margin-top: 20px; }
+    .product-description { margin-bottom: 0.75rem; }
+    /* Адаптив */
+    @media (max-width: 1200px) {
+      .catalog__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 1024px) { 
+      .nav__list { gap: 20px; }
+      .catalog__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav--desktop { display: none; }
+      .burger { display: flex; }
+      .hero__frame { width: 240px; height: 270px; }
+      .hero__semicircle-svg { width: 220px; top: -30px; }
+      .hero__semicircle-text { font-size: 18px; }
+      .section-title { font-size: 2rem; }
+      .delivery__grid { flex-direction: column; }
+      .footer__container { flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; text-align: left; }
+      .footer__brand { align-items: flex-start; flex: 1; }
+      .footer__col { flex: 1; min-width: 120px; }
+      .socials { justify-content: flex-start; }
+      .cart-drawer { width: 100%; right: -100%; }
+      .fillings__grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+      .filling-card img { width: 140px; height: 140px; }
+      .catalog__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .hero__frame { width: 200px; height: 230px; }
+      .hero__semicircle-svg { width: 180px; top: -25px; }
+      .hero__semicircle-text { font-size: 15px; }
+      .btn-want, .btn-details { font-size: 12px; }
+      .footer__container { flex-direction: column; align-items: center; text-align: center; }
+      .footer__brand { align-items: center; }
+      .socials { justify-content: center; }
+      .footer__col { text-align: center; }
+      .catalog__grid { grid-template-columns: 1fr; }
+    }
+    .contact-links {
+      display: flex; gap: 16px; justify-content: center; margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      background: var(--purple); color: white; padding: 10px 20px;
+      border-radius: 40px; text-decoration: none; font-weight: 500;
+    }
+    .contact-link:hover { background: var(--purple-dark); }
+    .date-label {
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      display: block;
+      color: var(--purple);
+    }
+    @media (min-width: 769px) {
+  .swiper-slide-active {
+    transform: scale(1.15);
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- ШАПКА -->
+  <header class="header">
+    <div class="header__container">
+<a href="#home" class="logo"><img src="images/Логотип.png" alt="Tortella" onerror="this.src='https://placehold.co/93x23/926EAE/white?text=Tortella'"></a>      <nav class="nav--desktop">
+        <ul class="nav__list">
+          <li><a href="#home" class="nav__link">О нас</a></li>
+          <li><a href="#catalog" class="nav__link">Каталог</a></li>
+          <li><a href="#delivery" class="nav__link">Доставка</a></li>
+          <li><a href="#faq" class="nav__link">Вопросы</a></li>
+          <li><a href="#contacts" class="nav__link">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="icon-btn" id="cartIconBtn"><i class="fas fa-shopping-bag"></i><span class="cart-count" id="cartCount">0</span></button>
+        <button class="icon-btn" id="userIconBtn"><i class="fas fa-user"></i></button>
+        <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+  <!-- Бургер меню -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu__close" id="closeMenuBtn">&times;</button>
+    <ul class="mobile-menu__list">
+      <li><a href="#home">О нас</a></li>
+      <li><a href="#catalog">Каталог</a></li>
+      <li><a href="#delivery">Доставка</a></li>
+      <li><a href="#faq">Вопросы</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <!-- ГЕРОЙ -->
+    <section id="home" class="hero">
+      <div class="container hero__container">
+        <div class="hero__frame">
+          <svg class="hero__semicircle-svg" viewBox="0 0 320 80" preserveAspectRatio="none">
+            <path id="semiPath" d="M 20,45 A 140,45 0 0,1 300,45" fill="none" />
+            <text class="hero__semicircle-text" font-size="22" fill="#6b4b84" font-family="'Playfair Display', serif" font-weight="700">
+              <textPath href="#semiPath" startOffset="50%" text-anchor="middle">Екатерина, Tortella</textPath>
+            </text>
+          </svg>
+          <img src="images/главное_фото.png" alt="Екатерина" onerror="this.src='https://placehold.co/400x500/f3cac8/926EAE?text=Екатерина'">
+        </div>
+        <div>
+          <p class="hero__location"><i class="fas fa-map-marker-alt"></i> Краснодар</p>
+          <p class="hero__desc">Авторские десерты из натуральных ингредиентов. В каждом торте – любовь и вдохновение. Более 7 лет радую сладкоежек Кубани по любому поводу и без просто так.</p>
+          <button class="btn" id="orderMainBtn">Заказать десерт</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЛУЧШИЕ РАБОТЫ (карусель) -->
+    <section id="best" class="best-works">
+      <div class="container">
+        <h2 class="section-title">Лучшие работы</h2>
+        <p class="section-subtitle">Вдохновляйтесь и заказывайте</p>
+        <div class="swiper bestSwiper">
+          <div class="swiper-wrapper" id="bestSwiperWrapper"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- НАЧИНКИ -->
+    <section id="fillings" class="fillings">
+      <div class="container">
+        <h2 class="section-title">Наши начинки</h2>
+        <div class="fillings__grid" id="fillingsGrid"></div>
+      </div>
+    </section>
+
+    <!-- КАТАЛОГ -->
+    <section id="catalog" class="catalog">
+      <div class="container">
+        <h2 class="section-title">Каталог десертов</h2>
+        <div class="catalog__grid" id="catalogGrid"></div>
+      </div>
+    </section>
+
+    <!-- ДОСТАВКА -->
+    <section id="delivery" class="delivery">
+      <div class="container">
+        <h2 class="section-title">Доставка</h2>
+        <div class="delivery__grid">
+          <div class="delivery__methods">
+            <div class="delivery__method"><h3><i class="fas fa-motorcycle"></i> Привезу лично</h3><p>Доставка по Краснодару в день заказа. Бесплатно при заказе от 2000 ₽.</p></div>
+            <div class="delivery__method"><h3><i class="fas fa-truck"></i> Отправлю доставкой</h3><p>Отправка транспортными компаниями (СДЭК, Boxberry) по всей России. Стоимость рассчитывается индивидуально.</p></div>
+            <div class="delivery__method"><h3><i class="fas fa-store"></i> Самовывоз</h3><p>Заберите свой заказ сами по адресу: г. Краснодар, ул. Красная, 123 (предварительно согласовав время).</p></div>
+          </div>
+          <div class="delivery__map">
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=38.9769%2C45.0355&z=12&pt=38.9769,45.0355,pm2rdm" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <h2 class="section-title">Остались вопросы?</h2>
+        <div class="faq-list" id="faqList">
+          <div class="faq-item">
+            <div class="faq-question"><span>Как хранить ваши торты?</span><i class="fas fa-plus"></i></div>
+            <div class="faq-answer"><p>Торты рекомендуется хранить в холодильнике при температуре +2...+6°C. Срок хранения – до 3 суток.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><span>Можно ли заказать торт с индивидуальным дизайном?</span><i class="fas fa-plus"></i></div>
+            <div class="faq-answer"><p>Да, мы изготавливаем торты на заказ по вашим фото и пожеланиям. Свяжитесь с нами для обсуждения деталей.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><span>Какие способы оплаты вы принимаете?</span><i class="fas fa-plus"></i></div>
+            <div class="faq-answer"><p>Наличные при самовывозе, перевод на карту, оплата при доставке курьеру.</p></div>
+          </div>
+        </div>
+        <div class="faq-button-wrapper">
+          <button class="btn" id="contactBtn">Связаться с нами</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contacts" class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <div class="logo"><img src="images/logo.svg" alt="Tortella" style="height:40px;" onerror="this.src='https://placehold.co/93x23/926EAE/white?text=Tortella'"></div>
+        <div class="socials">
+          <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-telegram-plane"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Навигация</h4>
+        <ul><li><a href="#home">Главная</a></li><li><a href="#catalog">Каталог</a></li><li><a href="#delivery">Доставка</a></li><li><a href="#faq">Вопросы</a></li></ul>
+      </div>
+      <div class="footer__col">
+        <h4>Помощь</h4>
+        <ul><li><a href="#">Как заказать</a></li><li><a href="#">Оплата</a></li><li><a href="#">Возврат</a></li></ul>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <ul><li>+7 (989) 835-75-20</li><li>hello@tortella.ru</li><li>Краснодар, ЮМР</li></ul>
+      </div>
+    </div>
+    <div class="footer__bottom"><p>&copy; 2025 Tortella. Все права защищены.</p></div>
+  </footer>
+
+  <!-- Модальные окна -->
+  <div id="productModal" class="modal"><div class="modal__content"><button class="modal__close">&times;</button><div id="modalBody"></div></div></div>
+  <div id="userModal" class="modal"><div class="modal__content"><button class="modal__close">&times;</button><h3>Личный кабинет</h3><div id="userOrders"></div></div></div>
+  <div id="orderFormModal" class="modal"><div class="modal__content"><button class="modal__close">&times;</button><h3>Оформление заказа</h3><form id="orderForm"><input type="text" name="name" placeholder="Имя *" required><input type="tel" name="phone" placeholder="Телефон *" required><input type="email" name="email" placeholder="Email (необязательно)"><input type="text" name="address" placeholder="Адрес доставки *" required><label class="date-label">К какому числу подготовить заказ? </label><input type="date" name="date" required><textarea name="comment" rows="3" placeholder="Комментарий"></textarea><div id="orderSummary"></div><button type="submit" class="btn">Отправить заказ</button></form></div></div>
+  <div id="contactModal" class="modal"><div class="modal__content"><button class="modal__close">&times;</button><h3>Связаться с нами</h3><div class="contact-links"><a href="#" class="contact-link">WhatsApp</a><a href="#" class="contact-link">Telegram</a><a href="#" class="contact-link">Instagram</a></div><div><i class="fas fa-phone-alt"></i> +7 (989) 835-75-20</div></div></div>
+  <div id="notificationModal" class="modal" style="display: none;"><div class="modal__content notification-modal"><p id="notificationMessage">Товар добавлен в корзину</p><button id="notificationOkBtn">ОК</button></div></div>
+
+  <!-- Корзина -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer__header"><h3>Корзина</h3><button class="cart-drawer__close">&times;</button></div>
+    <div class="cart-drawer__items" id="cartItems"></div>
+    <div class="cart-drawer__footer"><div class="cart-total">Итого: <span id="cartTotal">0</span> ₽</div><button class="btn" id="checkoutBtn">Оформить заказ</button></div>
+  </div>
+
+  <script>
+    // ---------- НАСТРОЙКА ----------
+    const ORDER_WEBHOOK_URL = ''; 
+
+    // ---------- ДАННЫЕ (добавлено 5 новых товаров, 3 из них - лучшие работы) ----------
+    let products = [
+      { id:1, name:"Шоколадное эскимо", price:1800, image:"images/тортик.png", description:"Нежный медовый торт с кремом", weight:"1 кг", composition:"Мёд, сметана, мука", is_best:true, type:"cake" },
+      { id:2, name:"Чизкейк на палочке (в ассортименте)", price:1900, image:"images/чизкейки.png", description:"Сверху хрустящий бельгийский шоколад", weight:"1 кг", is_best:true, type:"cake" },
+      { id:3, name:"Финики в шоколаде", price:2100, image:"images/финики.png", description:"Бархатный бисквит", weight:"1.2 кг", is_best:false, type:"cake" },
+      { id:4, name:"Птичье молоко", price:1950, image:"images/birdmilk.jpg", description:"Суфле на агар-агаре", weight:"1 кг", is_best:true, type:"cake" },
+      // НОВЫЕ ТОВАРЫ (5 штук)
+      { id:5, name:"Зефир", price:2300, image:"images/Зефир.jpg", description:"Итальянский десерт с маскарпоне и кофе", weight:"1 кг", composition:"Маскарпоне, савоярди, кофе", is_best:true, type:"cake" },
+      { id:6, name:"Чизкейк Нью-Йорк", price:2000, image:"images/cheesecake.jpg", description:"Классический творожный чизкейк", weight:"1 кг", composition:"Сливочный сыр, печенье, яйца", is_best:false, type:"cake" },
+      { id:7, name:"Пирожное картошка", price:2500, image:"images/IMG_0129.JPG", description:"Миндально-коньячный торт", weight:"1.1 кг", composition:"Миндаль, коньяк, масляный крем", is_best:true, type:"cake" },
+      { id:8, name:"Сигары-трюфель", price:2200, image:"images/Сигары.png", description:"Шоколадный торт с арахисом и карамелью", weight:"1 кг", composition:"Шоколад, арахис, карамель", is_best:false, type:"cake" },
+      { id:9, name:"Корпусное пирожное манго", price:1850, image:"images/korpys_mango.jpg", description:"Хрустящий бельгийский шоколад и нежнейщий мусс", weight:"1 кг", composition:"бельгийский шоколад, манго, сливки, бисквит", is_best:false, type:"cake" }
+    ];
+
+    const fillingsData = [
+      { img:"images/filling1.jpg", name:"Сливочный крем", desc:"Нежный заварной" },
+      { img:"images/filling2.jpg", name:"Три шоколада", desc:"Бельгийский шоколад" },
+      { img:"images/filling3.jpg", name:"Вишневое блаженство", desc:"Вишня, легкий мусс" },
+      { img:"images/торт_кофе.png", name:"Кофе, карамель", desc:"Воздушный, бодрящий" }
+    ];
+
+    // ---------- КОРЗИНА ----------
+    function getCart() { return JSON.parse(localStorage.getItem('tortella_cart')) || []; }
+    function saveCart(cart) { localStorage.setItem('tortella_cart', JSON.stringify(cart)); updateCartUI(); }
+    function addToCart(product, quantity = 1) { 
+      let cart = getCart(); 
+      let existing = cart.find(i => i.id === product.id); 
+      if(existing) existing.quantity = (existing.quantity || 1) + quantity; 
+      else cart.push({...product, quantity: quantity}); 
+      saveCart(cart); 
+      showNotification('Товар добавлен в корзину');
+    }
+    function removeFromCart(id) { let cart = getCart(); cart = cart.filter(i => i.id !== id); saveCart(cart); }
+    function getCartTotal() { return getCart().reduce((s,i)=> s + (i.price * (i.quantity||1)), 0); }
+    function getCartCount() { return getCart().reduce((s,i)=> s + (i.quantity||1), 0); }
+    function updateCartUI() { document.querySelectorAll('#cartCount').forEach(el => el.textContent = getCartCount()); document.getElementById('cartTotal').textContent = getCartTotal(); renderCartDrawer(); }
+    function renderCartDrawer() { 
+      let container = document.getElementById('cartItems'); 
+      if(!container) return; 
+      let cart = getCart(); 
+      if(cart.length===0) container.innerHTML = '<p>Корзина пуста</p>'; 
+      else container.innerHTML = cart.map(item => `<div class="cart-item"><img src="${item.image || 'https://placehold.co/80'}" onerror="this.src='https://placehold.co/80'"><div class="cart-item-details"><h4>${item.name}</h4><p>${item.price} ₽ × ${item.quantity}</p></div><button class="cart-item-remove" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button></div>`).join(''); 
+      document.querySelectorAll('.cart-item-remove').forEach(btn => btn.addEventListener('click', (e) => removeFromCart(parseInt(btn.dataset.id)))); 
+    }
+
+    // ---------- УВЕДОМЛЕНИЕ ----------
+    function showNotification(message) {
+      const modal = document.getElementById('notificationModal');
+      const msgSpan = document.getElementById('notificationMessage');
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      const closeBtn = document.getElementById('notificationOkBtn');
+      const closeModal = () => {
+        modal.style.display = 'none';
+        closeBtn.removeEventListener('click', closeModal);
+      };
+      closeBtn.addEventListener('click', closeModal);
+    }
+
+    // ---------- ОТПРАВКА ЗАКАЗА ----------
+    async function submitOrder(orderData) {
+      if(ORDER_WEBHOOK_URL) {
+        try {
+          await fetch(ORDER_WEBHOOK_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(orderData) });
+          return true;
+        } catch(e) { console.error(e); return false; }
+      } else {
+        console.log('Заказ (имитация):', orderData);
+        return true;
+      }
+    }
+
+    // ---------- ОТРИСОВКА КАТАЛОГА ----------
+    function renderCatalog() { 
+      let grid = document.getElementById('catalogGrid'); 
+      if(grid) grid.innerHTML = products.map(p => `<div class="product-card"><img src="${p.image}" onerror="this.src='https://placehold.co/300x220/f3cac8/926EAE?text=торт'"><div class="product-card__body"><h3>${p.name}</h3><p class="product-card__price">${p.price} ₽</p><div class="product-card__actions"><button class="btn-want add-to-cart" data-id="${p.id}">Хочу такой!</button><button class="btn-details details-btn" data-id="${p.id}">Подробнее</button></div></div></div>`).join(''); 
+      attachProductEvents(); 
+    }
+    function attachProductEvents() { 
+      document.querySelectorAll('.add-to-cart').forEach(btn => btn.addEventListener('click', (e) => addToCart(products.find(p=>p.id===parseInt(btn.dataset.id))))); 
+      document.querySelectorAll('.details-btn').forEach(btn => btn.addEventListener('click', (e) => showProductModal(products.find(p=>p.id===parseInt(btn.dataset.id))))); 
+    }
+    
+    function showProductModal(product) {
+      let modalBody = document.getElementById('modalBody');
+      let quantityHtml = `<div class="quantity-selector"><label>Вес (кг):</label><input type="number" id="productQuantity" min="0.5" step="0.5" value="1"></div>`;
+      modalBody.innerHTML = `
+        <img class="modal__product-img" src="${product.image}" onerror="this.src='https://placehold.co/400x300'">
+        <h3>${product.name}</h3>
+        <p><strong>Цена:</strong> ${product.price} ₽</p>
+        <p><strong>Вес:</strong> ${product.weight||'уточняйте'}</p>
+        <p><strong>Состав:</strong> ${product.composition||'натуральные'}</p>
+        <p class="product-description">${product.description||''}</p>
+        ${quantityHtml}
+        <button class="btn modal-add-btn" id="modalAddToCart">Хочу такой!</button>
+      `;
+      document.getElementById('productModal').style.display='flex';
+      document.getElementById('modalAddToCart').onclick = () => {
+        let qty = parseFloat(document.getElementById('productQuantity').value);
+        if(isNaN(qty) || qty <=0) qty = 1;
+        addToCart(product, qty);
+        document.getElementById('productModal').style.display='none';
+      };
+    }
+
+    // ---------- КАРУСЕЛЬ Swiper (лучшие работы) ----------
+    function initBestSwiper() {
+      const bestProducts = products.filter(p => p.is_best);
+      const wrapper = document.getElementById('bestSwiperWrapper');
+      if(!wrapper) return;
+      wrapper.innerHTML = bestProducts.map(p => `
+        <div class="swiper-slide">
+          <img src="${p.image}" onerror="this.src='https://placehold.co/300x220/f3cac8/926EAE?text=торт'">
+          <div class="best-info">
+            <h3 class="best-title">${p.name}</h3>
+            <p class="best-price">${p.price} ₽</p>
+            <div class="best-actions">
+              <button class="btn-want best-add" data-id="${p.id}">Хочу такой!</button>
+              <button class="btn-details best-detail" data-id="${p.id}">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      document.querySelectorAll('.best-add').forEach(btn => btn.addEventListener('click', (e) => addToCart(products.find(p=>p.id===parseInt(btn.dataset.id)))));
+      document.querySelectorAll('.best-detail').forEach(btn => btn.addEventListener('click', (e) => showProductModal(products.find(p=>p.id===parseInt(btn.dataset.id)))));
+
+      new Swiper('.bestSwiper', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        spaceBetween: 30,
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 100,
+          depth: 200,
+          modifier: 2,
+          slideShadows: false,
+        },
+        loop: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          320: { slidesPerView: 1.2, spaceBetween: 20, coverflowEffect: { stretch: 40, depth: 100 } },
+          768: { slidesPerView: 2.2, spaceBetween: 30, coverflowEffect: { stretch: 80, depth: 150 } },
+          1024: { slidesPerView: 3, spaceBetween: 40, coverflowEffect: { stretch: 120, depth: 200 } }
+        }
+      });
+    }
+
+  function renderFillings() { 
+  let grid = document.getElementById('fillingsGrid'); 
+  if(grid) grid.innerHTML = fillingsData.map(f => {
+    let style = '';
+    // Если это нужное фото — добавляем object-position
+    if (f.img === 'images/торт_кофе.png') {
+      style = 'style="object-position: 30% 30%;"'; // Подберите свои проценты
+    }
+    return `<div class="filling-card"><img src="${f.img}" ${style} onerror="this.src='https://placehold.co/120/f3cac8/926EAE?text=img'"><h4>${f.name}</h4><p>${f.desc}</p></div>`;
+  }).join(''); 
+}
+    
+    function initFaq() { 
+      document.querySelectorAll('.faq-question').forEach(q => { 
+        q.addEventListener('click', () => { 
+          let parent = q.closest('.faq-item'); 
+          parent.classList.toggle('active'); 
+          let icon = q.querySelector('i'); 
+          if(icon) icon.classList.toggle('fa-plus', !parent.classList.contains('active')); 
+          icon.classList.toggle('fa-minus', parent.classList.contains('active')); 
+        }); 
+      }); 
+    }
+
+    function initModals() {
+      const productModal = document.getElementById('productModal');
+      const userModal = document.getElementById('userModal');
+      const orderModal = document.getElementById('orderFormModal');
+      const contactModal = document.getElementById('contactModal');
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartOverlay = document.getElementById('cartOverlay');
+      document.querySelectorAll('.modal__close').forEach(btn => btn.addEventListener('click', () => { productModal.style.display='none'; userModal.style.display='none'; orderModal.style.display='none'; contactModal.style.display='none'; }));
+      window.addEventListener('click', (e) => { if(e.target.classList?.contains('modal')) { productModal.style.display='none'; userModal.style.display='none'; orderModal.style.display='none'; contactModal.style.display='none'; } });
+      
+      function openCart() { cartDrawer.classList.add('open'); cartOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+      function closeCart() { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('active'); document.body.style.overflow = ''; }
+      document.getElementById('cartIconBtn').onclick = openCart;
+      document.querySelector('.cart-drawer__close').onclick = closeCart;
+      cartOverlay.onclick = closeCart;
+      
+      document.getElementById('userIconBtn').onclick = () => {
+        const justOrdered = sessionStorage.getItem('orderJustPlaced');
+        let message = '';
+        if(justOrdered === 'true') {
+          message = '<p style="color: var(--purple);">Ваш заказ принят! Мы свяжемся с вами в ближайшее время.</p>';
+          sessionStorage.removeItem('orderJustPlaced');
+        } else {
+          message = '<p>У вас пока нет заказов. Оформите первый заказ!</p>';
+        }
+        document.getElementById('userOrders').innerHTML = message;
+        userModal.style.display='flex';
+      };
+      document.getElementById('checkoutBtn').onclick = () => { if(getCartCount()===0) showNotification('Корзина пуста'); else { closeCart(); orderModal.style.display='flex'; } };
+      document.getElementById('orderMainBtn').onclick = () => document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+      document.getElementById('contactBtn').onclick = () => contactModal.style.display='flex';
+    }
+
+    function initOrderForm() {
+      document.getElementById('orderForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let formData = new FormData(e.target);
+        let cart = getCart();
+        if(cart.length===0) { showNotification('Корзина пуста'); return; }
+        let order = {
+          name: formData.get('name'),
+          phone: formData.get('phone'),
+          email: formData.get('email'),
+          address: formData.get('address'),
+          date: formData.get('date'),
+          comment: formData.get('comment'),
+          items: cart.map(i=>({name:i.name, price:i.price, quantity:i.quantity})),
+          total: getCartTotal(),
+          timestamp: new Date().toISOString()
+        };
+        let success = await submitOrder(order);
+        if(success) {
+          saveCart([]);
+          sessionStorage.setItem('orderJustPlaced', 'true');
+          document.getElementById('orderFormModal').style.display='none';
+          showNotification('Заказ принят! Мы свяжемся с вами.');
+          updateCartUI();
+        } else {
+          showNotification('Ошибка отправки. Попробуйте позже.');
+        }
+      });
+    }
+
+    function initBurger() {
+      const burgerBtn = document.getElementById('burgerBtn');
+      const overlay = document.getElementById('mobileOverlay');
+      const menu = document.getElementById('mobileMenu');
+      const closeBtn = document.getElementById('closeMenuBtn');
+      function open() { overlay.classList.add('open'); menu.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function close() { overlay.classList.remove('open'); menu.classList.remove('open'); document.body.style.overflow = ''; }
+      burgerBtn.onclick = open;
+      closeBtn.onclick = close;
+      overlay.onclick = close;
+      document.querySelectorAll('.mobile-menu__list a').forEach(link => link.addEventListener('click', close));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCatalog();
+      initBestSwiper();
+      renderFillings();
+      initFaq();
+      initModals();
+      initOrderForm();
+      initBurger();
+      updateCartUI();
+    });
+  </script>
+</body>
+</html>
