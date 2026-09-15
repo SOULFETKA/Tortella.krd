@@ -625,7 +625,7 @@
     // ---------- ДАННЫЕ (добавлено 5 новых товаров, 3 из них - лучшие работы) ----------
     let products = [
       { id:1, name:"Шоколадное эскимо", price:1800, image:"images/тортик.png", description:"Нежный медовый торт с кремом", weight:"1 кг", composition:"Мёд, сметана, мука", is_best:true, type:"cake" },
-      { id:2, name:"Чизкейк на палочке (в ассортименте)", price:1900, image:"images/чизкейки.png", description:"Сверху хрустящий бельгийский шоколад", weight:"1 кг", is_best:true, type:"cake" },
+      { id:2, name:"Чизкейк на палочке (в ассортименте)", price:1900, image:"images/чизкейки.png", description:"Сверху хрустящий бельгийский шоколад", weight:"1 кг", is_best:true, type:"cake" },
       { id:3, name:"Финики в шоколаде", price:2100, image:"images/финики.png", description:"Бархатный бисквит", weight:"1.2 кг", is_best:false, type:"cake" },
       { id:4, name:"Птичье молоко", price:1950, image:"images/birdmilk.jpg", description:"Суфле на агар-агаре", weight:"1 кг", is_best:true, type:"cake" },
       // НОВЫЕ ТОВАРЫ (5 штук)
@@ -637,11 +637,15 @@
     ];
 
     const fillingsData = [
-      { img:"images/filling1.jpg", name:"Сливочный крем", desc:"Нежный заварной" },
-      { img:"images/filling2.jpg", name:"Три шоколада", desc:"Бельгийский шоколад" },
-      { img:"images/начинка_вишня3.jpg", name:"Вишневое блаженство", desc:"Вишня, легкий мусс" },
-      { img:"images/торт_кофе.png", name:"Кофе, карамель", desc:"Воздушный, бодрящий" }
+      { img:"images/фисташка-манго.png", name:"Фисташка-манго", desc:"Влажные фисташковые бисквиты, манговое конфи и нежный сливочный крем" },
+      { img:"images/filling2.jpg", name:"Шоколадный трюфель", desc:"Шоколадный бисквит, сироп с какао и нежный шоколадный крем-мусс" },
+      { img:"images/Сникерс.jpeg", name:"Сникерс", desc:"Классика вкуса: шоколадные бсквиты, арахис и нежная карамель, хрустящий слой на молочном шоколаде" },
+      { img:"images/торт_кофе.png", name:"Кофе, карамель", desc:"Воздушный, бодрящий" },
+      { img:"images/Рафаэлло.png", name:"Рафаэлло", desc:"Воздушные кокосовые бисквиты, пропитанные сливочно-кокосовым сиропом, кокосовый крем-мусс" },
+      { img:"images/Ягодный пломбир.png", name:"Ягодный пломбир", desc:"Воздушные бисквиты, ягодное конфи и нежный крем-суфле" },
+
     ];
+
 
     // ---------- КОРЗИНА ----------
     function getCart() { return JSON.parse(localStorage.getItem('tortella_cart')) || []; }
